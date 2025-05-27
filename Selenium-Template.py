@@ -17,7 +17,7 @@ chrome_options = Options()
 options = [
     "--window-size=1200,1200",
     "--ignore-certificate-errors",
-    "--headless",
+    #"--headless",
     "--disable-gpu",
     "--no-sandbox",
     "--disable-dev-shm-usage",
@@ -33,4 +33,3 @@ driver.get('http://github.com')
 print(driver.title)
 with open('./GitHub_Action_Results.txt', 'w') as f:
     f.write(f"This was written with a GitHub action {driver.title}")
-
