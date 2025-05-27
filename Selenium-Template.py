@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 import chromedriver_autoinstaller
 from pyvirtualdisplay import Display
+import tempfile
 display = Display(visible=0, size=(800, 800))  
 display.start()
 
@@ -11,6 +12,14 @@ chromedriver_autoinstaller.install()  # Check if the current version of chromedr
                                       # then add chromedriver to path
 
 chrome_options = webdriver.ChromeOptions()    
+
+
+
+# Use a unique user data directory to avoid conflicts
+  # Define window size here
+user_data_dir = tempfile.mkdtemp()
+chrome_options.add_argument(f"--user-data-dir={user_data_dir}")
+
 # Add your options as needed    
 options = [
   # Define window size here
