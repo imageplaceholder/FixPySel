@@ -1,50 +1,34 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoSuchElementException, SessionNotCreatedException
+from selenium.webdriver.common.action_chains import ActionChains
 import chromedriver_autoinstaller
 from pyvirtualdisplay import Display
-import tempfile
-display = Display(visible=0, size=(800, 800))  
+import time
+import os
+
+# --- Setup virtual display (headless) ---
+display = Display(visible=0, size=(1200, 1200))
 display.start()
 
-chromedriver_autoinstaller.install()  # Check if the current version of chromedriver exists
-                                      # and if it doesn't exist, download it automatically,
-                                      # then add chromedriver to path
+# --- Auto install chromedriver ---
+chromedriver_autoinstaller.install()
 
-chrome_options = webdriver.ChromeOptions()    
-
-
-
-# Use a unique user data directory to avoid conflicts
-  # Define window size here
-user_data_dir = tempfile.mkdtemp()
-chrome_options.add_argument(f"--user-data-dir={user_data_dir}")
-
-# Add your options as needed    
+# --- Setup Chrome options ---
+chrome_options = Options()
 options = [
-  # Define window size here
-   "--window-size=1200,1200",
-    "--ignore-certificate-errors"
- 
-    #"--headless",
-    #"--disable-gpu",
-    #"--window-size=1920,1200",
-    #"--ignore-certificate-errors",
-    #"--disable-extensions",
+    "--window-size=1200,1200",
+    "--ignore-certificate-errors",
+    "--headless",
+    "--disable-gpu",
     "--no-sandbox",
     "--disable-dev-shm-usage",
     '--remote-debugging-port=9222'
 ]
-
 for option in options:
     chrome_options.add_argument(option)
 
-    
-driver = webdriver.Chrome(options = chrome_options)
+driver = webdriver.Chrome(options=chrome_options)
 
 driver.get('http://github.com')
 print(driver.title)
